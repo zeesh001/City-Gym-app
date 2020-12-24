@@ -8,6 +8,6 @@ data class UserDTO (var id: Int,
                     var address:String,
                     var gender:String,
                     var timing_slot:String,
-                    var trainer:Boolean,
+                    var trainer:String,
                     var service:String
                      )
