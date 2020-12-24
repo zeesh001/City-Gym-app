@@ -8,7 +8,6 @@ class UserDAO {
         UserDTO(name = "Alice", email = "alice@wonderland.com",phone = 5689,address = "aspen",gender = "Male",timing_slot ="Morning",trainer = true,service ="Work out",  id = 0),
        // UserDTO(name = "Bob", email = "bob@cat.ie",phone = 5689,address = "aspen",gender = "Male",timing_slot ="Morning",trainer = true, service = "Swiming", id = 1),
         //UserDTO(name = "Mary", email = "mary@contrary.com",phone = 5689,address = "aspen",gender = "Male",timing_slot ="Morning",trainer = true,service = "all" ,id = 2),
-        //UserDTO(name = "Carol", email = "carol@singer.com",phone = 5689,address = "aspen",gender = "Male",timing_slot ="Morning",trainer = true,service = "all", id = 3)
     )
 
     fun getAll(): ArrayList<UserDTO> {
