@@ -33,6 +33,7 @@ class JavalinConfig {
             delete("/api/users/:user-id", CityGymAPI::deleteUser)
             delete("/api/users/deleteByPhone/:phone", CityGymAPI::deleteUserByPhone)
             patch( "/api/users/:user-id", CityGymAPI::updateUser)
+
             ///////////Services endpoints
 
             get("/api/services/:service_name", CityGymAPI::getServicesByName)
