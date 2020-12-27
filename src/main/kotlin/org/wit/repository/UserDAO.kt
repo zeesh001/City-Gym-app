@@ -36,7 +36,8 @@ class UserDAO {
                 it[gender] = userDTO.gender
                 it[timing_slot] = userDTO.timing_slot
                 it[trainer] = userDTO.trainer
-                it[service] = userDTO.service
+                it[service_name] = userDTO.service_name
+                it[started] = userDTO.started
             }
         }
     }
@@ -61,12 +62,14 @@ class UserDAO {
         }
         }
     }
+
     fun delete(id: Int):Int{
         return transaction{ Users.deleteWhere{
             Users.id eq id
         }
         }
     }
+
     fun update(id: Int, userDTO: UserDTO){
         transaction {
             Users.update ({
@@ -78,7 +81,8 @@ class UserDAO {
                 it[gender] = userDTO.gender
                 it[timing_slot] = userDTO.timing_slot
                 it[trainer] = userDTO.trainer
-                it[service] = userDTO.service
+                it[service_name] = userDTO.service_name
+                it[started] = userDTO.started
             }
         }
     }
