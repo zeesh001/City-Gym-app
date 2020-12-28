@@ -1,7 +1,5 @@
 package org.wit.controllers
 
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.wit.repository.UserDAO
@@ -9,13 +7,21 @@ import io.javalin.http.Context
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ServiceDAO
+import org.wit.utilities.jsonToObject
 
 object CityGymAPI {
    private val userDao = UserDAO()
    private val serviceDAO = ServiceDAO()
 
     fun getAllUsers(ctx: Context) {
-        ctx.json(userDao.getAll())
+        val users = userDao.getAll()
+        if (users.size != 0) {
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
+        ctx.json(users)
     }
 
     fun getUserByUserId(ctx: Context) {
@@ -23,6 +29,11 @@ object CityGymAPI {
         if (user != null)
         {
           ctx.json(user)
+            ctx.status(200)
+        }
+        else
+        {
+            ctx.status(404)
         }
     }
 
@@ -31,6 +42,10 @@ object CityGymAPI {
         if (user != null)
         {
             ctx.json(user)
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
         }
 
     }
@@ -45,37 +60,49 @@ object CityGymAPI {
     }
 
     fun deleteUserByPhone(ctx: Context){
-        userDao.deleteByPhone(ctx.pathParam("phone").toInt())
-    }
+       val user = userDao.deleteByPhone(ctx.pathParam("phone").toInt())
+        if(user != 0 )
+            ctx.status(204)
+        else
+            ctx.status(404)
+        }
 
     fun deleteUser(ctx: Context){
-        userDao.delete(ctx.pathParam("user-id").toInt())
+        if (userDao.delete(ctx.pathParam("id").toInt()) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
     }
+
 
     fun addUser(ctx: Context) {
-        val mapper = jacksonObjectMapper().registerModule(JodaModule())
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        val verify = mapper.readValue<UserDTO>(ctx.body())
-        val user = mapper.readValue<UserDTO>(ctx.body())
-            userDao.save(user)
+        val user : UserDTO = jsonToObject(ctx.body())
+        val verify = user
+        val userId = userDao.save(user)
+        if (userId != null) {
+           // user.id = userId
             ctx.json(user)
-           serviceDAO.update(verify.service_name)
+            ctx.status(201)
+            serviceDAO.update(verify.service_name)
+        }
     }
 
+
     fun updateUser(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<UserDTO>(ctx.body())
-        userDao.update(
-            id = ctx.pathParam("user-id").toInt(),
-            userDTO=user)
+        val user : UserDTO = jsonToObject(ctx.body())
+        if ((userDao.update(id = ctx.pathParam("user-id").toInt(), userDTO=user)) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
     }
+
+
     //--------------------------------------------------------------
     // ServiceDAO specifics
     //-------------------------------------------------------------
 
     fun updateName(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val service = mapper.readValue<ServiceDTO>(ctx.body())
+        val service : ServiceDTO = jsonToObject(ctx.body())
         serviceDAO.updateServiceName(
             serv_name = ctx.pathParam("service_name"),
             serviceDTO = service )
@@ -102,11 +129,10 @@ object CityGymAPI {
 
 
     fun deleteService(ctx: Context){
-        val service = serviceDAO.deleteByServiceName(ctx.pathParam("service_namr"))
-        if (service != null){
+        val service = serviceDAO.deleteByServiceName(ctx.pathParam("service_name"))
+
             ctx.json(service)
-        }
-        else{ ctx.json("not exist") }
+
     }
 
     fun addService(ctx: Context) {

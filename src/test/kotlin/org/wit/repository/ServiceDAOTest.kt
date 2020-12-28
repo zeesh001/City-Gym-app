@@ -36,7 +36,7 @@ class ServiceDAOTest {
         fun `multiple services added to table can be retrieved successfully`() {
             transaction {
                 //Arrange - create and populate tables with three users and three activities
-                val userDAO = populateUserTable()
+//                val userDAO = populateUserTable()
                 val serviceDAO = populateServiceTable()
                 //Act & Assert
                 assertEquals(3, serviceDAO.getAll().size)

@@ -30,11 +30,11 @@ class JavalinConfig {
             get("/api/users/email/:email",CityGymAPI::getUserByEmail)
             get("/api/users/phone/:phone",CityGymAPI::getUserByPhone)
             post("/api/users",CityGymAPI::addUser )
-            delete("/api/users/:user-id", CityGymAPI::deleteUser)
+            delete("/api/users/:id", CityGymAPI::deleteUser)
             delete("/api/users/deleteByPhone/:phone", CityGymAPI::deleteUserByPhone)
             patch( "/api/users/:user-id", CityGymAPI::updateUser)
 
-            ///////////Services endpoints
+             ///////////Services endpoints
 
             get("/api/services/:service_name", CityGymAPI::getServicesByName)
            // get("/api/services/:id", CityGymAPI::getServicesById)

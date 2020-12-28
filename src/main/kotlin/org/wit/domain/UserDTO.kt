@@ -9,6 +9,7 @@ data class UserDTO (var id: Int,
                     var gender:String,
                     var timing_slot:String,
                     var trainer:String,
-                    var service_name:String,
-                    var started: DateTime
+                    var service_name:String
+
                      )
+//var started: DateTime

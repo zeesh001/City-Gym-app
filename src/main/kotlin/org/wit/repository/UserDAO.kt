@@ -27,8 +27,9 @@ class UserDAO {
     }
 
     fun save(userDTO: UserDTO){
-        transaction {
+       return transaction {
             Users.insert {
+                it[id] = userDTO.id
                 it[name] = userDTO.name
                 it[email] = userDTO.email
                 it[phone] =  userDTO.phone
@@ -37,8 +38,8 @@ class UserDAO {
                 it[timing_slot] = userDTO.timing_slot
                 it[trainer] = userDTO.trainer
                 it[service_name] = userDTO.service_name
-                it[started] = userDTO.started
-            }
+           //     it[started] = userDTO.started
+            }//get Users.id
         }
     }
 
@@ -56,22 +57,21 @@ class UserDAO {
         }
     }
 
-    fun deleteByPhone(phone: Int) {
+    fun deleteByPhone(phone: Int): Int {
         return transaction{ Users.deleteWhere{
             Users.phone eq phone
         }
         }
     }
 
-    fun delete(id: Int):Int{
-        return transaction{ Users.deleteWhere{
-            Users.id eq id
-        }
+    fun delete(id: Int): Int{
+        return transaction{
+            Users.deleteWhere{ Users.id eq id }
         }
     }
 
-    fun update(id: Int, userDTO: UserDTO){
-        transaction {
+    fun update(id: Int, userDTO: UserDTO):Int{
+        return transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[name] = userDTO.name
@@ -82,7 +82,7 @@ class UserDAO {
                 it[timing_slot] = userDTO.timing_slot
                 it[trainer] = userDTO.trainer
                 it[service_name] = userDTO.service_name
-                it[started] = userDTO.started
+               // it[started] = userDTO.started
             }
         }
     }

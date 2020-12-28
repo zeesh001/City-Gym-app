@@ -8,11 +8,9 @@ import org.joda.time.DateTime
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.wit.db.Services
 import org.wit.db.Users
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
-import org.wit.helpers.populateServiceTable
 import org.wit.helpers.populateUserTable
 
 //retrieving some test data from Fixtures
@@ -39,7 +37,7 @@ class UserDAOTest {
         fun `multiple users added to table can be retrieved successfully`() {
             transaction {
                 //Arrange - create and populate table with three users
-               // val serviceDAO = populateServiceTable()
+               //val serviceDAO = populateServiceTable()
                 val userDAO = populateUserTable()
 
                 //Act & Assert
@@ -157,7 +155,7 @@ class UserDAOTest {
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                val user3Updated = UserDTO(3, "new username", "new@email.ie",phone =5689 ,address="aspen",gender="Male",timing_slot = "Morning",trainer = "yes",service_name = "Workout", started = DateTime.now())
+                val user3Updated = UserDTO(3, "new username", "new@email.ie",phone =5689 ,address="aspen",gender="Male",timing_slot = "Morning",trainer = "yes",service_name = "Workout")
                 userDAO.update(user3.id, user3Updated)
                 assertEquals(user3Updated, userDAO.findById(3))
             }
@@ -170,7 +168,7 @@ class UserDAOTest {
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                val user4Updated = UserDTO(4, "new username", "new@email.ie",phone =5689 ,address="aspen",gender="Male",timing_slot = "Morning",trainer = "yes",service_name = "Workout" , started = DateTime.now())
+                val user4Updated = UserDTO(4, "new username", "new@email.ie",phone =5689 ,address="aspen",gender="Male",timing_slot = "Morning",trainer = "yes",service_name = "Workout" )
                 userDAO.update(4, user4Updated)
                 assertEquals(null, userDAO.findById(4))
                 assertEquals(3, userDAO.getAll().size)

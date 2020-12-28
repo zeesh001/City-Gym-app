@@ -16,7 +16,7 @@ fun mapToUserDTO(it: ResultRow) = UserDTO(
     timing_slot = it[Users.timing_slot],
     trainer = it[Users.trainer],
     service_name = it[Users.service_name],
-    started = it[Users.started]
+  //  started = it[Users.started]
 )
 
 fun mapToServiceDTO(it: ResultRow) = ServiceDTO(
