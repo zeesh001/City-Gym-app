@@ -35,13 +35,6 @@ class ServiceDAO {
         }
     }
 
-//    fun findByServiceId(id: Int): ServiceDTO?{
-//        return transaction {
-//            Services.select() { Services.id eq id}.map{mapToServiceDTO(it)}
-//                .firstOrNull()
-//        }
-//    }
-
     //Save a Service to the database
     fun save(serviceDTO: ServiceDTO){
         transaction {
@@ -56,21 +49,5 @@ class ServiceDAO {
     fun deleteByServiceName(service_name : String) {
         return transaction{ Services.deleteWhere{
             Services.service_name eq service_name
-        }
-        }
-    }
-
-    //update enrolled users
-    fun update(service: String ){
-       val check =  findByServiceName(service)
-       val check1 =  check!!.enrolled_user
-        val check2 = check1+1
-        transaction {
-            Services.update ({
-                Services.service_name eq service}){
-                 it[enrolled_user] = check2     }
-
-
-            }
-        }
+        } } }
     }

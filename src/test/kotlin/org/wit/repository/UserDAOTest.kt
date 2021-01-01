@@ -32,7 +32,6 @@ class UserDAOTest {
     @Nested
     inner class CreateUsers{
 
-
         @Test
         fun `multiple users added to table can be retrieved successfully`() {
             transaction {
@@ -46,6 +45,24 @@ class UserDAOTest {
                 assertEquals(user2, userDAO.findById(user2.id))
                 assertEquals(user3, userDAO.findById(user3.id))
 
+            }
+        }
+
+
+
+    }
+
+    @Nested
+    inner class ReadUsers {
+
+
+        @Test
+        fun `getting all users from a populated table returns all rows`() {
+            transaction {
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+                //Act & Assert
+                assertEquals(3, userDAO.getAll().size)
             }
         }
 
@@ -82,24 +99,19 @@ class UserDAOTest {
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                assertEquals(user2, userDAO.findByEmail(user2.email))
+                assertEquals(user2  , userDAO.findByEmail(user2.email))
             }
         }
 
-    }
-
-    @Nested
-    inner class ReadUsers {
         @Test
-        fun `getting all users from a populated table returns all rows`() {
+        fun `getting all users by service name from a populated table returns all rows`() {
             transaction {
                 //Arrange - create and populate table with three users
                 val userDAO = populateUserTable()
                 //Act & Assert
-                assertEquals(3, userDAO.getAll().size)
+                assertEquals(2, userDAO.findUserByServiceName("workout").size)
             }
         }
-
 
         @Test
         fun `get user by id that doesn't exist, results in no user returned`() {
@@ -108,6 +120,16 @@ class UserDAOTest {
                 //Arrange - create and populate table with three users
                 val userDAO = populateUserTable()
 
+                //Act & Assert
+                assertEquals(null, userDAO.findById(4))
+            }
+        }
+
+        @Test
+        fun `get user by id that exists, results in a correct user returned`() {
+            transaction {
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
                 //Act & Assert
                 assertEquals(null, userDAO.findById(4))
             }
@@ -126,15 +148,6 @@ class UserDAOTest {
             }
         }
 
-        @Test
-        fun `get user by id that exists, results in a correct user returned`() {
-            transaction {
-                //Arrange - create and populate table with three users
-                val userDAO = populateUserTable()
-                //Act & Assert
-                assertEquals(null, userDAO.findById(4))
-            }
-        }
         @Test
         fun `get user by phone that exists, results in a correct user returned`() {
             transaction {

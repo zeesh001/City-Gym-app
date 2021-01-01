@@ -73,7 +73,7 @@ class ServiceDAOTest {
         }
 
         @Test
-        fun `get Service by Service id that has no records, results in no record returned`() {
+        fun `get Service by Service name that has no records, results in no record returned`() {
             transaction {
                 //Arrange - create and populate tables with three users and three activities
                 val serviceDAO = populateServiceTable()
@@ -82,7 +82,7 @@ class ServiceDAOTest {
         }
 
         @Test
-        fun `get activity by activity id that exists, results in a correct activity returned`() {
+        fun `get service by service name that exists, results in a correct service returned`() {
             transaction {
 
                 val serviceDAO = populateServiceTable()
@@ -141,9 +141,7 @@ class ServiceDAOTest {
         @Test
         fun `deleting an existing service in table results in record being deleted`() {
             transaction {
-
                 val serviceDAO = populateServiceTable()
-
                 //Act & Assert
                 assertEquals(3, serviceDAO.getAll().size)
                 serviceDAO.deleteByServiceName(service3.service_name)

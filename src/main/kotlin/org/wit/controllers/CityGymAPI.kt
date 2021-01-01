@@ -4,6 +4,10 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.wit.repository.UserDAO
 import io.javalin.http.Context
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
+import org.wit.db.Services
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ServiceDAO
@@ -50,6 +54,18 @@ object CityGymAPI {
 
     }
 
+    fun getUsersByService(ctx: Context) {
+        val service = userDao.findUserByServiceName(ctx.pathParam("service_name"))
+        if (service != null){
+            ctx.json(service)
+            ctx.status(200)
+        }
+    else{
+            ctx.json("not exist")
+        ctx.status(404)
+    }
+    }
+
     fun getUserByPhone(ctx: Context) {
         val user = userDao.findByPhone(ctx.pathParam("phone").toInt())
         if (user != null)
@@ -68,12 +84,16 @@ object CityGymAPI {
         }
 
     fun deleteUser(ctx: Context){
-        if (userDao.delete(ctx.pathParam("id").toInt()) != 0)
+        val value = ctx.pathParam("id").toInt()
+        val service = userDao.findById(value)
+        decrementService(service!!.service_name)
+        val user = userDao.delete(value)
+        if (user != 0) {
             ctx.status(204)
-        else
+        }
+            else
             ctx.status(404)
     }
-
 
     fun addUser(ctx: Context) {
         val user : UserDTO = jsonToObject(ctx.body())
@@ -83,10 +103,9 @@ object CityGymAPI {
            // user.id = userId
             ctx.json(user)
             ctx.status(201)
-            serviceDAO.update(verify.service_name)
+            update(verify.service_name)
         }
     }
-
 
     fun updateUser(ctx: Context){
         val user : UserDTO = jsonToObject(ctx.body())
@@ -107,26 +126,21 @@ object CityGymAPI {
             serv_name = ctx.pathParam("service_name"),
             serviceDTO = service )
     }
+
     fun getAllServices(ctx: Context) {
         ctx.json(serviceDAO.getAll())
     }
-
-//    fun getServicesById(ctx: Context) {
-//        val service = serviceDAO.findByServiceId(ctx.pathParam("id"))
-//        if (service != null){
-//            ctx.json(service)
-//        }
-//        else{ ctx.json("not exist") }
-//    }
 
     fun getServicesByName(ctx: Context) {
         val service = serviceDAO.findByServiceName(ctx.pathParam("service_name"))
         if (service != null){
             ctx.json(service)
+            ctx.status(200)
         }
-        else{ ctx.json("not exist") }
+        else{ ctx.json("not exist")
+            ctx.status(404)
+        }
     }
-
 
     fun deleteService(ctx: Context){
         val service = serviceDAO.deleteByServiceName(ctx.pathParam("service_name"))
@@ -141,5 +155,33 @@ object CityGymAPI {
         serviceDAO.save(service)
         ctx.json(service)
             }
+
+    //update enrolled users
+    fun update(service: String ){
+        val check =  serviceDAO.findByServiceName(service)
+        val check1 =  check!!.enrolled_user
+        val check2 = check1+1
+        transaction {
+            Services.update ({
+                Services.service_name eq service}){
+                it[enrolled_user] = check2     }
+
+        }
+    }
+
+    fun decrementService(service: String ){
+        val check =  serviceDAO.findByServiceName(service)
+        val check1 =  check!!.enrolled_user
+        val check2 = check1-1
+        transaction {
+            Services.update ({
+                Services.service_name eq service}){
+                it[enrolled_user] = check2     }
+
+
+        }
+    }
+
+
 
 }

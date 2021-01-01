@@ -1,11 +1,9 @@
 package org.wit.repository
-
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.utilities.mapToUserDTO
 import org.wit.db.Users
 import org.wit.domain.UserDTO
-
 class UserDAO {
 
     fun getAll(): ArrayList<UserDTO> {
@@ -24,6 +22,15 @@ class UserDAO {
                 .map{mapToUserDTO(it)}
                 .firstOrNull()
         }
+    }
+
+    fun findUserByServiceName(service: String): ArrayList<UserDTO>{
+        val userList: ArrayList<UserDTO> = arrayListOf()
+         transaction {
+            Users.select() { Users.service_name eq service}.map{ userList.add(mapToUserDTO(it)) }
+                .firstOrNull()
+        }
+        return userList
     }
 
     fun save(userDTO: UserDTO){

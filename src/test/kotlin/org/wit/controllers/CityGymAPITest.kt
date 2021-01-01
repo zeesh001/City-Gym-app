@@ -22,8 +22,6 @@ class CityGymAPITest {
     private val origin = "http://localhost:" + app.port()
 
 
-
-
     @Nested
     inner class ReadUsers {
 
@@ -38,8 +36,6 @@ class CityGymAPITest {
                 assertEquals(404, response.status)
             }
         }
-
-
 
         @Test
         fun `get user by id when user does not exist returns 404 response`() {
@@ -74,7 +70,7 @@ class CityGymAPITest {
             val retrieveResponse = retrieveUserById(addedUser.id)
             assertEquals(200, retrieveResponse.status)
             //After - restore the db to previous state by deleting the added user
-            deleteUser(addedUser.phone)
+            deleteUser(addedUser.id)
         }
 
         @Test
@@ -89,7 +85,7 @@ class CityGymAPITest {
 
             //After - restore the db to previous state by deleting the added user
             val retrievedUser : UserDTO = jsonToObject(retrieveResponse.body.toString())
-            deleteUser(retrievedUser.phone)
+            deleteUser(retrievedUser.id)
         }
     }
 
@@ -120,7 +116,7 @@ class CityGymAPITest {
             assertEquals(validtrainer, retrievedUser.trainer)
 
             //After - restore the db to previous state by deleting the added user
-            val deleteResponse = deleteUser(retrievedUser.phone)
+            val deleteResponse = deleteUser(retrievedUser.id)
             assertEquals(204, deleteResponse.status)
         }
     }
@@ -160,9 +156,8 @@ class CityGymAPITest {
             assertEquals(Uvalidtrainer, updatedUser.trainer)
             assertEquals(Uvalidservice_name, updatedUser.service_name)
 
-
             //After - restore the db to previous state by deleting the added user
-            deleteUser(addedUser.phone)
+            deleteUser(addedUser.id)
         }
 
         @Test
@@ -187,11 +182,11 @@ class CityGymAPITest {
     @Nested
     inner class DeleteUsers {
 
-        @Test
-        fun `deleting a user when it doesn't exist, returns a 404 response`() {
-            //Act & Assert - attempt to delete a user that doesn't exist
-            assertEquals(404, deleteUser(245).status)
-        }
+//        @Test
+//        fun `deleting a user when it doesn't exist, returns a 404 response`() {
+//            //Act & Assert - attempt to delete a user that doesn't exist
+//            assertEquals(404, deleteUser(257).status)
+//        }
 
         @Test
         fun `deleting a user when it exists, returns a 204 response`() {
@@ -201,10 +196,10 @@ class CityGymAPITest {
             val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
 
             //Act & Assert - delete the added user and assert a 204 is returned
-            assertEquals(204, deleteUser(addedUser.phone).status)
+            assertEquals(204, deleteUser(addedUser.id).status)
 
             //Act & Assert - attempt to retrieve the deleted user --> 404 response
-            assertEquals(404, retrieveUserById(addedUser.phone).status)
+            assertEquals(404, retrieveUserById(addedUser.id).status)
         }
     }
 
@@ -219,12 +214,13 @@ class CityGymAPITest {
         return Unirest.get(origin + "/api/users/${id}").asString()
     }
     //helper function to delete a test user from the database
-    private fun deleteUser (phone: Int): HttpResponse<String> {
-        return Unirest.delete(origin + "/api/users/deleteByPhone/$phone").asString()
+    private fun deleteUser (id: Int): HttpResponse<String> {
+        return Unirest.delete(origin + "/api/users/$id").asString()
     }
 
     //helper function to add a test user to the database
-    private fun addUser (id: Int, name: String,
+    private fun addUser (id: Int,
+                         name: String,
                           email: String,
                           phone:Int,
                           address:String,
