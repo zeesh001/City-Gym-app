@@ -102,11 +102,11 @@
         </form>
       </div>
 
-<!--      <div class="card-footer text-center">-->
-<!--        <div v-if="user">-->
-<!--          <a :href="`/users/${user.service_name}/services`">View User</a>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div class="card-footer text-center">-->
+      <!--        <div v-if="user">-->
+      <!--          <a :href="`/users/${user.service_name}/services`">View User</a>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
     </div>
   </app-layout>

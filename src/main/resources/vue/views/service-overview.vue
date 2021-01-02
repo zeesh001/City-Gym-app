@@ -7,7 +7,7 @@
       <div class="card-header">
         <div class="row">
           <div class="col-6">
-            Users
+            Service
           </div>
           <div class="col" align="right">
             <button rel="tooltip" title="Add"
@@ -70,6 +70,12 @@
           <a :href="`/services/${service.service_name}/services`">
             <button rel="tooltip" title="Review" class="btn btn-info btn-simple btn-link">
               <i class="far fa-address-book"></i>
+            </button>
+          </a>
+
+          <a :href="`/services/${service.service_name}`">
+            <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
           </a>
 

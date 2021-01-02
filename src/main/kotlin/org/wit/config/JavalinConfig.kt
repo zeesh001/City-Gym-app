@@ -28,37 +28,32 @@ class JavalinConfig {
         app.routes {
 
 
-
-            // The @routeComponent that we added in layout.html earlier will be replaced
-            // by the String inside of VueComponent. This means a call to / will load
-            // the layout and display our <home-page> component.
             get("/", VueComponent("<home-page></home-page>"))
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/:user-id", VueComponent("<user-profile></user-profile>"))
-            get("/users/:service_name/services", VueComponent("<user-service-overview></user-service-overview>"))
+            get("/services/:service_name", VueComponent("<user-service-overview></user-service-overview>"))
             get("/services", VueComponent("<service-overview></service-overview>"))
             get("/services/:service_name/services", VueComponent("<enlist-users></enlist-users>"))
 
 
             ////userAPIs
             get("/api/users", CityGymAPI::getAllUsers)
+            post("/api/users",CityGymAPI::addUser )
             get("/api/users/:user-id",CityGymAPI::getUserByUserId)
             get("/api/users/email/:email",CityGymAPI::getUserByEmail)
-            get("/api/users/phone/:phone",CityGymAPI::getUserByPhone)
+            get("/api/users/phone/:number",CityGymAPI::getUserByPhone)
             get("/api/users/service/:service_name", CityGymAPI::getUsersByService)
-            post("/api/users",CityGymAPI::addUser )
             delete("/api/users/:id", CityGymAPI::deleteUser)
             delete("/api/users/deleteByPhone/:phone", CityGymAPI::deleteUserByPhone)
             patch( "/api/users/:user-id", CityGymAPI::updateUser)
 
              ///////////Services endpoints
-
+            post("/api/services", CityGymAPI::addService)
+            patch("/api/services/:service_name", CityGymAPI::updateName)
             get("/api/services/:service_name", CityGymAPI::getServicesByName)
-           // get("/api/services/:id", CityGymAPI::getServicesById)
+            get("/api/services/id/:id", CityGymAPI::getServicesById)
             delete("/api/services/:service_name", CityGymAPI::deleteService)
             get("/api/services", CityGymAPI::getAllServices)
-            post("/api/services", CityGymAPI::addService)
-            patch("/api/services/:id", CityGymAPI::updateName)
 
 
 

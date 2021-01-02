@@ -57,10 +57,10 @@ class UserDAO {
         }
     }
 
-    fun findByPhone(phone: Int):UserDTO? {
+    fun findByPhone(number: Int):UserDTO? {
         return  transaction {
             Users.select(){
-                Users.phone eq phone }.map{mapToUserDTO(it)}.firstOrNull()
+                Users.phone eq number }.map{mapToUserDTO(it)}.firstOrNull()
         }
     }
 

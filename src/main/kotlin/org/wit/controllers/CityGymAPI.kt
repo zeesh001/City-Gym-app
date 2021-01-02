@@ -67,7 +67,7 @@ object CityGymAPI {
     }
 
     fun getUserByPhone(ctx: Context) {
-        val user = userDao.findByPhone(ctx.pathParam("phone").toInt())
+        val user = userDao.findByPhone(ctx.pathParam("number").toInt())
         if (user != null)
         {
             ctx.json(user)
@@ -129,6 +129,17 @@ object CityGymAPI {
 
     fun getAllServices(ctx: Context) {
         ctx.json(serviceDAO.getAll())
+    }
+
+    fun getServicesById(ctx: Context) {
+        val service = serviceDAO.findByServiceId(ctx.pathParam("id").toInt())
+        if (service != null){
+            ctx.json(service)
+            ctx.status(200)
+        }
+        else{ ctx.json("not available")
+            ctx.status(404)
+        }
     }
 
     fun getServicesByName(ctx: Context) {

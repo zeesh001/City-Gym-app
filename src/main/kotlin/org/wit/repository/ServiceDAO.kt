@@ -35,6 +35,12 @@ class ServiceDAO {
         }
     }
 
+    fun findByServiceId(id: Int): ServiceDTO?{
+        return transaction {
+            Services.select() { Services.id eq id}.map{mapToServiceDTO(it)}
+                .firstOrNull()
+        }
+    }
     //Save a Service to the database
     fun save(serviceDTO: ServiceDTO){
         transaction {
