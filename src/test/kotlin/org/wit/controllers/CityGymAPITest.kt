@@ -3,9 +3,9 @@ package org.wit.controllers
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import org.junit.jupiter.api.TestInstance
-import org.wit.config.DbConfig
 import org.wit.helpers.ServerContainer
 import kong.unirest.Unirest
+import org.jetbrains.exposed.sql.Database
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.jupiter.api.Nested
@@ -17,7 +17,11 @@ import org.wit.utilities.jsonToObject
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CityGymAPITest {
 
-    private val db = DbConfig().getDbConnection()
+    val db = Database.connect(
+        "jdbc:postgresql://ec2-54-247-71-245.eu-west-1.compute.amazonaws.com:5432/dd8594gk1bf8te?sslmode=require",
+        driver = "org.postgresql.Driver",
+        user = "nlbzbqdzlcbzks",
+        password = "f25c255e57004ce547dad8f861f3efd86e214b1ee597e164279c3e6b8ad4c7db")
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
