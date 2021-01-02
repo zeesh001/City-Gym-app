@@ -8,14 +8,17 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.wit.db.Services
+import org.wit.domain.PackageDTO
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
+import org.wit.repository.PackageDAO
 import org.wit.repository.ServiceDAO
 import org.wit.utilities.jsonToObject
 
 object CityGymAPI {
    private val userDao = UserDAO()
    private val serviceDAO = ServiceDAO()
+    private val packageDAO = PackageDAO()
 
     fun getAllUsers(ctx: Context) {
         val users = userDao.getAll()
@@ -193,6 +196,54 @@ object CityGymAPI {
         }
     }
 
+    //--------------------------------------------------------------
+    // PackagesDAO specifics
+    //-------------------------------------------------------------
 
+    fun getAllPackages(ctx: Context) {
+        ctx.json(packageDAO.getAll())
+    }
+
+    fun updatePackage(ctx: Context){
+        val packge : PackageDTO = jsonToObject(ctx.body())
+        packageDAO.updatePackage(
+            id = ctx.pathParam("id").toInt(),
+            packageDTO = packge )
+    }
+
+    fun getPackageById(ctx: Context) {
+        val packge = packageDAO.findByPackageId(ctx.pathParam("id").toInt())
+        if (packge != null){
+            ctx.json(packge)
+            ctx.status(200)
+        }
+        else{ ctx.json("not available")
+            ctx.status(404)
+        }
+    }
+
+    fun getPackageByCategory(ctx: Context) {
+        val Packge = packageDAO.findByPackageCategory(ctx.pathParam("package_cat"))
+        if (Packge != null){
+            ctx.json(Packge)
+            ctx.status(200)
+        }
+        else{ ctx.json("not exist")
+            ctx.status(404)
+        }
+    }
+
+    fun deletePackage(ctx: Context){
+        val service = packageDAO.deleteById(ctx.pathParam("id").toInt())
+        ctx.json(service)
+
+    }
+
+    fun addPackage(ctx: Context) {
+        val mapper = jacksonObjectMapper()
+        val Packge = mapper.readValue<PackageDTO>(ctx.body())
+        packageDAO.save(Packge)
+        ctx.json(Packge)
+    }
 
 }

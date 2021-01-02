@@ -24,16 +24,17 @@ class JavalinConfig {
     }
 
     private fun registerRoutes(app: Javalin){
-
         app.routes {
-
 
             get("/", VueComponent("<home-page></home-page>"))
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/:user-id", VueComponent("<user-profile></user-profile>"))
-            get("/services/:service_name", VueComponent("<user-service-overview></user-service-overview>"))
             get("/services", VueComponent("<service-overview></service-overview>"))
+            get("/services/:service_name", VueComponent("<user-service-overview></user-service-overview>"))
             get("/services/:service_name/services", VueComponent("<enlist-users></enlist-users>"))
+            get("/packages", VueComponent("<package-overview></package-overview>"))
+            get("/packages/:id", VueComponent("<package-update></package-update>"))
+
 
 
             ////userAPIs
@@ -55,7 +56,13 @@ class JavalinConfig {
             delete("/api/services/:service_name", CityGymAPI::deleteService)
             get("/api/services", CityGymAPI::getAllServices)
 
-
+            ///////packages endpoints
+            get("/api/packages", CityGymAPI::getAllPackages)
+            get("/api/packages/id/:id", CityGymAPI::getPackageById)
+            get("/api/packages/:package_cat", CityGymAPI::getPackageByCategory)
+            post("/api/packages", CityGymAPI::addPackage)
+            patch("/api/packages/:id", CityGymAPI::updatePackage)
+            delete("/api/packages/:id", CityGymAPI::deletePackage)
 
         }
 

@@ -31,10 +31,10 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="input-user-service_name">Service Name</span>
             </div>
-            <input type="text" class="form-control" v-model="formData.service_name" name="service_name" placeholder="Service Mame"/>
+            <input type="text" class="form-control" v-model="formData.service_name" name="service_name" placeholder="Service Name"/>
           </div>
         </form>
-        <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link" @click="addService()">Add Service</button>
+        <button rel="tooltip" title="Add" class="btn btn-info btn-simple btn-link" @click="addService()">Add Service</button>
       </div>
     </div>
 

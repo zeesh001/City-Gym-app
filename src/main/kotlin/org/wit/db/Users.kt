@@ -1,6 +1,4 @@
 package org.wit.db
-
-import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
 object Users : Table("users") {

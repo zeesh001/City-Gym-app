@@ -2,6 +2,7 @@
 <template id="home-page">
   <app-layout>
     <div class="row">
+
       <div class="col">
         <div class="card">
           <h5 class="card-header">Registered Users</h5>
@@ -11,6 +12,7 @@
           </div>
         </div>
       </div>
+
       <div class="col">
         <div class="card">
           <h5 class="card-header">Total Services</h5>
@@ -20,6 +22,18 @@
           </div>
         </div>
       </div>
+
+      <div class="col">
+        <div class="card">
+          <h5 class="card-header">Total Packages Available</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{packages.length}} services</h5>
+            <a href="/packages" class="btn btn-primary">More Details...</a>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </app-layout>
 </template>
@@ -37,6 +51,9 @@ Vue.component('home-page',
             .catch(() => alert("Error while fetching users"));
         axios.get("/api/services")
             .then(res => this.services = res.data)
+            .catch(() => alert("Error while fetching activities"));
+        axios.get("/api/packages")
+            .then(res => this.packages = res.data)
             .catch(() => alert("Error while fetching activities"));
       }
     });

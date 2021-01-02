@@ -1,8 +1,10 @@
 package org.wit.utilities
 
 import org.jetbrains.exposed.sql.ResultRow
+import org.wit.db.Packages
 import org.wit.db.Services
 import org.wit.db.Users
+import org.wit.domain.PackageDTO
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 
@@ -23,4 +25,12 @@ fun mapToServiceDTO(it: ResultRow) = ServiceDTO(
     id = it[Services.id],
     service_name = it[Services.service_name],
     enrolled_user = it[Services.enrolled_user]
+)
+
+fun mapToPackageDTO(it: ResultRow) = PackageDTO(
+    id = it[Packages.id],
+    package_cat = it[Packages.package_cat],
+    amount = it[Packages.amount],
+    service_name = it[Packages.service_name],
+    discount = it[Packages.discount]
 )

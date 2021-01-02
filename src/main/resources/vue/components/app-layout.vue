@@ -14,11 +14,13 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="/users">
-                Users <span class="sr-only">(current)</span>
-              </a>
+                Users <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/services">services</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="/services">Services <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/packages">Packages <span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </div>
