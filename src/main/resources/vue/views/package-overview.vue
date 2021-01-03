@@ -42,12 +42,6 @@
             </div>
             <input type="text" class="form-control" v-model="formData.service_name" name="service_name" placeholder="Service Name"/>
           </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="input-user-discount">Discount</span>
-            </div>
-            <input type="text" class="form-control" v-model="formData.discount" name="discount" placeholder="Discount"/>
-          </div>
         </form>
         <button rel="tooltip" title="Add" class="btn btn-info btn-simple btn-link" @click="addPackage()">Add Package</button>
       </div>
@@ -66,7 +60,7 @@
           <th> &nbsp &nbsp  &nbsp  &nbsp &nbsp &nbsp <span>|</span> &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp</th>
           <th>Service Name  </th>
           <th> &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp <span>|</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</th>
-          <th>Discount  </th>
+
         </tr>
       </table>
       <div class="list-group-item d-flex align-items-start"
@@ -81,7 +75,7 @@
             <tr>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </tr>
             <tr > {{ package.service_name }}</tr>
             <tr>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </tr>
-            <tr> {{ package.discount }}</tr>
+
           </table>
         </div>
 
@@ -146,8 +140,7 @@ Vue.component("package-overview", {
             id: this.formData.id,
             package_cat: this.formData.package_cat,
             amount: this.formData.amount,
-            service_name: this.formData.service_name,
-            discount: this.formData.discount
+            service_name: this.formData.service_name
 
           })
           .then(response => {
