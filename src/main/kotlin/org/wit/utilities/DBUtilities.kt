@@ -1,14 +1,8 @@
 package org.wit.utilities
 
 import org.jetbrains.exposed.sql.ResultRow
-import org.wit.db.Packages
-import org.wit.db.Promotions
-import org.wit.db.Services
-import org.wit.db.Users
-import org.wit.domain.PackageDTO
-import org.wit.domain.PromotionDTO
-import org.wit.domain.ServiceDTO
-import org.wit.domain.UserDTO
+import org.wit.db.*
+import org.wit.domain.*
 
 fun mapToUserDTO(it: ResultRow) = UserDTO(
     id = it[Users.id],
@@ -42,3 +36,10 @@ fun mapToPromotionDTO(it: ResultRow) = PromotionDTO(
     service_name = it[Promotions.service_name],
     discount = it[Promotions.discount]
 )
+
+fun mapToEmployeeDTO(it: ResultRow) = EmployeeDTO(
+    id = it[Employees.id],
+    e_name = it[Employees.e_name],
+    e_phone = it[Employees.e_phone],
+    designation = it[Employees.designation],
+    )

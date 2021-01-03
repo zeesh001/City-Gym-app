@@ -44,6 +44,19 @@
       </div>
 
     </div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <h5 class="card-header">Available Packages</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{employees.length}} packages</h5>
+            <a href="/employees" class="btn btn-primary">More Details...</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
   </app-layout>
 </template>
@@ -56,6 +69,7 @@ Vue.component('home-page',
         services: [],
         packages: [],
         promotions: [],
+        employees:[],
       }),
       created() {
         axios.get("/api/users")
@@ -69,6 +83,9 @@ Vue.component('home-page',
             .catch(() => alert("Error while fetching users"));
         axios.get("/api/promotions")
             .then(res => this.promotions = res.data)
+            .catch(() => alert("Error while fetching activities"));
+        axios.get("/api/employees")
+            .then(res => this.employees = res.data)
             .catch(() => alert("Error while fetching activities"));
 
       }

@@ -2,20 +2,14 @@ package org.wit.controllers
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import org.wit.repository.UserDAO
 import io.javalin.http.Context
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.wit.db.Packages
 import org.wit.db.Services
-import org.wit.domain.PackageDTO
-import org.wit.domain.PromotionDTO
-import org.wit.domain.ServiceDTO
-import org.wit.domain.UserDTO
-import org.wit.repository.PackageDAO
-import org.wit.repository.PromotionDAO
-import org.wit.repository.ServiceDAO
+import org.wit.domain.*
+import org.wit.repository.*
 import org.wit.utilities.jsonToObject
 
 object CityGymAPI {
@@ -23,6 +17,7 @@ object CityGymAPI {
    private val serviceDAO = ServiceDAO()
     private val packageDAO = PackageDAO()
     private val promotionDAO = PromotionDAO()
+    private val employeeDAO = EmployeeDAO()
 
     fun getAllUsers(ctx: Context) {
         val users = userDao.getAll()
@@ -248,17 +243,6 @@ object CityGymAPI {
         packageDAO.save(Packge)
         ctx.json(Packge)
     }
-//
-//    fun checkServicesByName(ctx: Context) {
-//        val service = packageDAO.findByServiceName(ctx.pathParam("service_name"))
-//        if (service != null){
-//            ctx.json(service)
-//            ctx.status(200)
-//        }
-//        else{ ctx.json("not exist")
-//            ctx.status(404)
-//        }
-//    }
 
 
     //--------------------------------------------------------------
@@ -312,6 +296,94 @@ object CityGymAPI {
         ctx.json(user)
         }
 
+
+    //--------------------------------------------------------------
+    // EmployeeDAO specifics
+    //-------------------------------------------------------
+
+
+    fun getAllEmployees(ctx: Context) {
+        val employees = employeeDAO.getAll()
+        if (employees.size != 0) {
+            ctx.status(200)
+        }
+        else{
+            ctx.status(404)
+        }
+        ctx.json(employees)
+    }
+
+    fun getEmployeeById(ctx: Context) {
+        val employee = employeeDAO.findById(ctx.pathParam("id").toInt())
+        if (employee != null)
+        {
+            ctx.json(employee)
+            ctx.status(200)
+        }
+        else
+        {
+            ctx.status(404)
+        }
+    }
+
+    fun getEmployeesByDesig(ctx: Context) {
+        val employee = employeeDAO.findEmployeeByDesignation(ctx.pathParam("designation"))
+        if (employee != null){
+            ctx.json(employee)
+            ctx.status(200)
+        }
+        else{
+            ctx.json("not exist")
+            ctx.status(404)
+        }
+    }
+
+    fun getEmployeeByPhone(ctx: Context) {
+        val employee = employeeDAO.findByPhone(ctx.pathParam("number").toInt())
+        if (employee != null)
+        {
+            ctx.json(employee)
+        }
+
+    }
+//
+//    fun deleteEmployeeByPhone(ctx: Context){
+//        val employee = employeeDAO.deleteByPhone(ctx.pathParam("phone").toInt())
+//        if(employee != 0 )
+//            ctx.status(204)
+//        else
+//            ctx.status(404)
+//    }
+
+    fun deleteEmployee(ctx: Context){
+        val value = ctx.pathParam("id").toInt()
+        val employee = employeeDAO.delete(value)
+        if (employee != 0) {
+            ctx.status(204)
+        }
+        else
+            ctx.status(404)
+    }
+
+    fun addEmployee(ctx: Context) {
+        val employee : EmployeeDTO = jsonToObject(ctx.body())
+        employeeDAO.save(employee)
+
+        ctx.json(employee)
+        ctx.status(201)
+    }
+
+    fun updateEmployee(ctx: Context){
+        val employee : EmployeeDTO = jsonToObject(ctx.body())
+        if ((employeeDAO.update(id = ctx.pathParam("id").toInt(), employeeDTO=employee)) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
+    }
+
+
+
+
 //    fun addDiscount(promotionDTO: PromotionDTO)
 //    { val name = packageDAO.findByServiceName(promotionDTO.service_name)
 //        val type = packageDAO.findByPackageCategory(promotionDTO.package_cat)
@@ -331,6 +403,10 @@ object CityGymAPI {
 //                        }) { it[discount] = promotionDTO.discount }
 //                    } } } }
 //     }
+
+
+
+
 
 
 }

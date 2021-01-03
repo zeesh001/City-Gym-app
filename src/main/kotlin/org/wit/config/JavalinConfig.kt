@@ -30,11 +30,12 @@ class JavalinConfig {
             get("/users", VueComponent("<user-overview></user-overview>"))
             get("/users/:user-id", VueComponent("<user-profile></user-profile>"))
             get("/services", VueComponent("<service-overview></service-overview>"))
-            get("/services/:service_name", VueComponent("<user-service-overview></user-service-overview>"))
             get("/services/:service_name/services", VueComponent("<enlist-users></enlist-users>"))
             get("/packages", VueComponent("<package-overview></package-overview>"))
             get("/packages/:id", VueComponent("<package-update></package-update>"))
             get("/promotions", VueComponent("<promotion-overview></promotion-overview>"))
+            get("/employees", VueComponent("<employee-overview></employee-overview>"))
+            get("/employees/:id", VueComponent("<employee-profile></employee-profile>"))
 
 
 
@@ -72,6 +73,18 @@ class JavalinConfig {
             post("/api/promotions", CityGymAPI::addPromotion)
             patch("/api/promotions/:id", CityGymAPI::updatePromotion)
             delete("/api/promotions/:id", CityGymAPI::deletePromotion)
+
+
+            ////EmployeeAPIs
+
+            get("/api/employees", CityGymAPI::getAllEmployees)
+            post("/api/employees",CityGymAPI::addEmployee )
+            get("/api/employees/:id",CityGymAPI::getEmployeeById)
+            get("/api/employees/phone/:number",CityGymAPI::getEmployeeByPhone)
+            get("/api/employees/service/:designation", CityGymAPI::getEmployeesByDesig)
+            delete("/api/employees/:id", CityGymAPI::deleteEmployee)
+          //  delete("/api/employees/deleteByPhone/:phone", CityGymAPI::deleteEmployeeByPhone)
+            patch( "/api/employees/:id", CityGymAPI::updateEmployee)
 
         }
 

@@ -1,14 +1,8 @@
 package org.wit.helpers
 
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.wit.db.Packages
-import org.wit.db.Promotions
-import org.wit.db.Services
-import org.wit.db.Users
-import org.wit.domain.PackageDTO
-import org.wit.domain.PromotionDTO
-import org.wit.domain.ServiceDTO
-import org.wit.domain.UserDTO
+import org.wit.db.*
+import org.wit.domain.*
 import org.wit.repository.*
 
 val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
@@ -49,6 +43,21 @@ val promotions = arrayListOf<PromotionDTO>(
     PromotionDTO(3,"monthly", "swimming", "70%"  )
 )
 
+val employees = arrayListOf<EmployeeDTO>(
+    EmployeeDTO (id = 1 ,e_name="Alice",e_phone =5689 ,designation="trainer" ),
+    EmployeeDTO (id = 2 ,e_name="zain",e_phone =5345689 ,designation="plumber" ),
+    EmployeeDTO (id = 3 ,e_name="zeesh",e_phone =345689 ,designation="cleaner" ),
+    EmployeeDTO (id = 4 ,e_name="Anna",e_phone =565389 ,designation="sweaper" )
+)
+
+fun populateEmployeeTable(): EmployeeDAO {
+    SchemaUtils.create(Employees)
+    val employeeDAO = EmployeeDAO()
+    employeeDAO.save(employees.get(0))
+    employeeDAO.save(employees.get(1))
+    employeeDAO.save(employees.get(2))
+    return employeeDAO
+}
 fun populatePromotionTable(): PromotionDAO {
     SchemaUtils.create(Promotions)
     val promotionDAO = PromotionDAO()
