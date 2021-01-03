@@ -98,7 +98,7 @@ class PackageDAOTest {
                 val packageDAO = populatePackageTable()
 
                 //Act & Assert
-                val package3updated = PackageDTO(1,"daily",5 , "swimming", "50%"  )
+                val package3updated = PackageDTO(1,"daily",5 , "swimming" )
                 packageDAO.updatePackage(package3updated.id, package3updated)
                 assertEquals(package3updated, packageDAO.findByPackageId(1))
             }
@@ -110,7 +110,7 @@ class PackageDAOTest {
                 val packageDAO = populatePackageTable()
 
                 //Act & Assert
-                val package4updated = PackageDTO(1,"yearlly",5 , "swimming", "50%"  )
+                val package4updated = PackageDTO(1,"yearlly",5 , "swimming" )
                 packageDAO.updatePackage(1, package4updated)
                 assertEquals(null, packageDAO.findByPackageCategory("yearlyy"))
                 assertEquals(3, packageDAO.getAll().size)

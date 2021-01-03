@@ -33,8 +33,7 @@ fun mapToPackageDTO(it: ResultRow) = PackageDTO(
     id = it[Packages.id],
     package_cat = it[Packages.package_cat],
     amount = it[Packages.amount],
-    service_name = it[Packages.service_name],
-    discount = it[Packages.discount]
+    service_name = it[Packages.service_name]
 )
 
 fun mapToPromotionDTO(it: ResultRow) = PromotionDTO(

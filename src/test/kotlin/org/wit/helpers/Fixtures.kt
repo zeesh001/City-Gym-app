@@ -38,9 +38,9 @@ val users = arrayListOf<UserDTO>(
 )
 
 val packages = arrayListOf<PackageDTO>(
-    PackageDTO(1,"daily",5 , "swimming", "50%"  ),
-    PackageDTO(2,"weekly",15 , "workout", "80%"  ),
-    PackageDTO(3,"monthly",25 , "swimming", "70%"  )
+    PackageDTO(1,"daily",5 , "swimming" ),
+    PackageDTO(2,"weekly",15 , "workout"  ),
+    PackageDTO(3,"monthly",25 , "swimming"  )
 )
 
 val promotions = arrayListOf<PromotionDTO>(

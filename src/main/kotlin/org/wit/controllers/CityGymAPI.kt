@@ -7,6 +7,7 @@ import io.javalin.http.Context
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import org.wit.db.Packages
 import org.wit.db.Services
 import org.wit.domain.PackageDTO
 import org.wit.domain.PromotionDTO
@@ -104,13 +105,12 @@ object CityGymAPI {
     fun addUser(ctx: Context) {
         val user : UserDTO = jsonToObject(ctx.body())
         val verify = user
-        val userId = userDao.save(user)
-        if (userId != null) {
-           // user.id = userId
+        userDao.save(user)
+
             ctx.json(user)
             ctx.status(201)
             update(verify.service_name)
-        }
+
     }
 
     fun updateUser(ctx: Context){
@@ -248,6 +248,17 @@ object CityGymAPI {
         packageDAO.save(Packge)
         ctx.json(Packge)
     }
+//
+//    fun checkServicesByName(ctx: Context) {
+//        val service = packageDAO.findByServiceName(ctx.pathParam("service_name"))
+//        if (service != null){
+//            ctx.json(service)
+//            ctx.status(200)
+//        }
+//        else{ ctx.json("not exist")
+//            ctx.status(404)
+//        }
+//    }
 
 
     //--------------------------------------------------------------
@@ -295,14 +306,31 @@ object CityGymAPI {
     }
 
     fun addPromotion(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val promotion = mapper.readValue<PromotionDTO>(ctx.body())
-        promotionDAO.save(promotion)
-        ctx.json(promotion)
-    }
+        val user : PromotionDTO = jsonToObject(ctx.body())
+        val verify = user
+         promotionDAO.save(user)
+        ctx.json(user)
+        }
 
-
-
+//    fun addDiscount(promotionDTO: PromotionDTO)
+//    { val name = packageDAO.findByServiceName(promotionDTO.service_name)
+//        val type = packageDAO.findByPackageCategory(promotionDTO.package_cat)
+//        println("a1"+name)
+//        println("b1"+type)
+//
+//
+//        if (name != null && type != null) {
+//            transaction {
+//                Packages.update({
+//                    Packages.service_name eq promotionDTO.service_name
+//                })
+//                {
+//                    transaction {
+//                        Packages.update({
+//                            Packages.service_name eq promotionDTO.package_cat
+//                        }) { it[discount] = promotionDTO.discount }
+//                    } } } }
+//     }
 
 
 }

@@ -1,10 +1,14 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Packages
+import org.wit.db.Services
 import org.wit.domain.PackageDTO
+import org.wit.domain.ServiceDTO
 import org.wit.utilities.mapToPackageDTO
+import org.wit.utilities.mapToServiceDTO
 
 class PackageDAO {
 
@@ -23,7 +27,6 @@ class PackageDAO {
                 it[package_cat] = packageDTO.package_cat
                 it[amount] = packageDTO.amount
                 it[service_name] = packageDTO.service_name
-                it[discount] = packageDTO.discount
             }
         }
     }
@@ -49,7 +52,6 @@ class PackageDAO {
                 it[package_cat] = packageDTO.package_cat
                 it[amount] = packageDTO.amount
                 it[service_name] = packageDTO.service_name
-                it[discount] = packageDTO.discount
             }
         }
     }
@@ -58,4 +60,6 @@ class PackageDAO {
         return transaction{ Packages.deleteWhere{
             Packages.id eq id
         } } }
+
+
 }
