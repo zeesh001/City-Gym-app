@@ -139,7 +139,7 @@ class CityGymAPITest {
             val Uvalidgender="feMale"
             val Uvalidtiming_slot = "evening"
             val Uvalidtrainer="no"
-            val Uvalidservice_name="swimming"
+            val Uvalidservice_name="swiming"
 
             val addedResponse = addUser(id, validName, validEmail , validphone ,validaddress , validgender , validtiming_slot , validtrainer ,  validservice_name  )
 
