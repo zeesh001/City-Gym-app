@@ -1,15 +1,10 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Packages
-import org.wit.db.Services
-import org.wit.db.Users
 import org.wit.domain.PackageDTO
-import org.wit.domain.ServiceDTO
 import org.wit.utilities.mapToPackageDTO
-import org.wit.utilities.mapToServiceDTO
 
 class PackageDAO {
 

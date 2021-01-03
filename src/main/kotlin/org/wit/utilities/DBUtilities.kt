@@ -5,6 +5,7 @@ import org.wit.db.Packages
 import org.wit.db.Services
 import org.wit.db.Users
 import org.wit.domain.PackageDTO
+import org.wit.domain.PromotionDTO
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 
@@ -31,6 +32,13 @@ fun mapToPackageDTO(it: ResultRow) = PackageDTO(
     id = it[Packages.id],
     package_cat = it[Packages.package_cat],
     amount = it[Packages.amount],
+    service_name = it[Packages.service_name],
+    discount = it[Packages.discount]
+)
+
+fun mapToPromotionDTO(it: ResultRow) = PromotionDTO(
+    id = it[Packages.id],
+    package_cat = it[Packages.package_cat],
     service_name = it[Packages.service_name],
     discount = it[Packages.discount]
 )
