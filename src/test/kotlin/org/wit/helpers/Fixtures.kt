@@ -2,9 +2,11 @@ package org.wit.helpers
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.wit.db.Packages
+import org.wit.db.Promotions
 import org.wit.db.Services
 import org.wit.db.Users
 import org.wit.domain.PackageDTO
+import org.wit.domain.PromotionDTO
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.*
@@ -40,6 +42,21 @@ val packages = arrayListOf<PackageDTO>(
     PackageDTO(2,"weekly",15 , "workout", "80%"  ),
     PackageDTO(3,"monthly",25 , "swimming", "70%"  )
 )
+
+val promotions = arrayListOf<PromotionDTO>(
+    PromotionDTO(1,"daily", "swimming", "50%"  ),
+    PromotionDTO(2,"weekly", "workout", "80%"  ),
+    PromotionDTO(3,"monthly", "swimming", "70%"  )
+)
+
+fun populatePromotionTable(): PromotionDAO {
+    SchemaUtils.create(Promotions)
+    val promotionDAO = PromotionDAO()
+    promotionDAO.save(promotions.get(0))
+    promotionDAO.save(promotions.get(1))
+    promotionDAO.save(promotions.get(2))
+    return promotionDAO
+}
 
 fun populatePackageTable(): PackageDAO {
     SchemaUtils.create(Packages)

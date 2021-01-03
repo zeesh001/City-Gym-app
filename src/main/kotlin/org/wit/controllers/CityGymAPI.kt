@@ -9,9 +9,11 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.wit.db.Services
 import org.wit.domain.PackageDTO
+import org.wit.domain.PromotionDTO
 import org.wit.domain.ServiceDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.PackageDAO
+import org.wit.repository.PromotionDAO
 import org.wit.repository.ServiceDAO
 import org.wit.utilities.jsonToObject
 
@@ -19,6 +21,7 @@ object CityGymAPI {
    private val userDao = UserDAO()
    private val serviceDAO = ServiceDAO()
     private val packageDAO = PackageDAO()
+    private val promotionDAO = PromotionDAO()
 
     fun getAllUsers(ctx: Context) {
         val users = userDao.getAll()
@@ -245,5 +248,61 @@ object CityGymAPI {
         packageDAO.save(Packge)
         ctx.json(Packge)
     }
+
+
+    //--------------------------------------------------------------
+    // PromotionDAO specifics
+    //-------------------------------------------------------
+
+
+    fun getAllPromotions(ctx: Context) {
+        ctx.json(promotionDAO.getAll())
+    }
+
+    fun updatePromotion(ctx: Context){
+        val promotion : PromotionDTO = jsonToObject(ctx.body())
+        promotionDAO.updatePromotion(
+            id = ctx.pathParam("id").toInt(),
+            promotionDTO = promotion )
+    }
+
+    fun getPromotionById(ctx: Context) {
+        val promotion = promotionDAO.findByPromotionId(ctx.pathParam("id").toInt())
+        if (promotion != null){
+            ctx.json(promotion)
+            ctx.status(200)
+        }
+        else{ ctx.json("not available")
+            ctx.status(404)
+        }
+    }
+
+    fun getPromotionByCategory(ctx: Context) {
+        val promotion = promotionDAO.findByPromotionCategory(ctx.pathParam("package_cat"))
+        if (promotion != null){
+            ctx.json(promotion)
+            ctx.status(200)
+        }
+        else{ ctx.json("not exist")
+            ctx.status(404)
+        }
+    }
+
+    fun deletePromotion(ctx: Context){
+        val promotion = promotionDAO.deleteById(ctx.pathParam("id").toInt())
+        ctx.json(promotion)
+
+    }
+
+    fun addPromotion(ctx: Context) {
+        val mapper = jacksonObjectMapper()
+        val promotion = mapper.readValue<PromotionDTO>(ctx.body())
+        promotionDAO.save(promotion)
+        ctx.json(promotion)
+    }
+
+
+
+
 
 }

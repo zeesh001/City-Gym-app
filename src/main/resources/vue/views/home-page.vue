@@ -22,18 +22,27 @@
           </div>
         </div>
       </div>
-
+    </div>
+    <div class="row">
       <div class="col">
         <div class="card">
           <h5 class="card-header">Total Packages Available</h5>
           <div class="card-body">
-            <h5 class="card-title">{{packages.length}} services</h5>
+            <h5 class="card-title">{{packages.length}} Packages</h5>
             <a href="/packages" class="btn btn-primary">More Details...</a>
           </div>
         </div>
       </div>
 
-
+      <div class="col">
+        <div class="card">
+          <h5 class="card-header"> Promotions Aavilable</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{promotions.length}} Promotions</h5>
+            <a href="/promotions" class="btn btn-primary">More Details...</a>
+          </div>
+        </div>
+      </div>
     </div>
   </app-layout>
 </template>
@@ -54,6 +63,9 @@ Vue.component('home-page',
             .catch(() => alert("Error while fetching activities"));
         axios.get("/api/packages")
             .then(res => this.packages = res.data)
+            .catch(() => alert("Error while fetching activities"));
+        axios.get("/api/promotions")
+            .then(res => this.promotions = res.data)
             .catch(() => alert("Error while fetching activities"));
       }
     });

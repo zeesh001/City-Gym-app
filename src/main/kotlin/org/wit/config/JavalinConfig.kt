@@ -34,6 +34,7 @@ class JavalinConfig {
             get("/services/:service_name/services", VueComponent("<enlist-users></enlist-users>"))
             get("/packages", VueComponent("<package-overview></package-overview>"))
             get("/packages/:id", VueComponent("<package-update></package-update>"))
+            get("/promotions", VueComponent("<promotion-overview></promotion-overview>"))
 
 
 
@@ -63,6 +64,14 @@ class JavalinConfig {
             post("/api/packages", CityGymAPI::addPackage)
             patch("/api/packages/:id", CityGymAPI::updatePackage)
             delete("/api/packages/:id", CityGymAPI::deletePackage)
+
+            ///////promotion endpoints
+            get("/api/promotions", CityGymAPI::getAllPromotions)
+            get("/api/promotions/id/:id", CityGymAPI::getPromotionById)
+            get("/api/promotions/:package_cat", CityGymAPI::getPromotionByCategory)
+            post("/api/promotions", CityGymAPI::addPromotion)
+            patch("/api/promotions/:id", CityGymAPI::updatePromotion)
+            delete("/api/promotions/:id", CityGymAPI::deletePromotion)
 
         }
 
