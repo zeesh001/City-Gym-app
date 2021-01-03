@@ -2,7 +2,6 @@
 <template id="home-page">
   <app-layout>
     <div class="row">
-
       <div class="col">
         <div class="card">
           <h5 class="card-header">Registered Users</h5>
@@ -12,7 +11,6 @@
           </div>
         </div>
       </div>
-
       <div class="col">
         <div class="card">
           <h5 class="card-header">Total Services</h5>
@@ -22,28 +20,31 @@
           </div>
         </div>
       </div>
+
     </div>
+
     <div class="row">
       <div class="col">
         <div class="card">
-          <h5 class="card-header">Total Packages Available</h5>
+          <h5 class="card-header">Available Packages</h5>
           <div class="card-body">
-            <h5 class="card-title">{{packages.length}} Packages</h5>
+            <h5 class="card-title">{{packages.length}} packages</h5>
             <a href="/packages" class="btn btn-primary">More Details...</a>
           </div>
         </div>
       </div>
-
       <div class="col">
         <div class="card">
-          <h5 class="card-header"> Promotions Aavilable</h5>
+          <h5 class="card-header">Total Promotions</h5>
           <div class="card-body">
             <h5 class="card-title">{{promotions.length}} Promotions</h5>
             <a href="/promotions" class="btn btn-primary">More Details...</a>
           </div>
         </div>
       </div>
+
     </div>
+
   </app-layout>
 </template>
 <script>
@@ -52,7 +53,9 @@ Vue.component('home-page',
       template: "#home-page",
       data: () => ({
         users: [],
-        services: []
+        services: [],
+        packages: [],
+        promotions: [],
       }),
       created() {
         axios.get("/api/users")
@@ -63,10 +66,11 @@ Vue.component('home-page',
             .catch(() => alert("Error while fetching activities"));
         axios.get("/api/packages")
             .then(res => this.packages = res.data)
-            .catch(() => alert("Error while fetching activities"));
+            .catch(() => alert("Error while fetching users"));
         axios.get("/api/promotions")
             .then(res => this.promotions = res.data)
             .catch(() => alert("Error while fetching activities"));
+
       }
     });
 </script>

@@ -17,13 +17,16 @@
                 Users <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/services">Services <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/services">
+                Services <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/packages">Packages <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/packages">
+                Packages <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/promotions">Promotions <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/promotions">
+                Promotions <span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </div>
