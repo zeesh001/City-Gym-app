@@ -73,11 +73,11 @@
             </button>
           </a>
 
-          <a :href="`/services/${service.service_name}`">
-            <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link">
-              <i class="fa fa-pencil" aria-hidden="true"></i>
-            </button>
-          </a>
+<!--          <a :href="`/services/${service.service_name}/services`">-->
+<!--            <button rel="tooltip" title="Update" class="btn btn-info btn-simple btn-link">-->
+<!--              <i class="fa fa-pencil" aria-hidden="true"></i>-->
+<!--            </button>-->
+<!--          </a>-->
 
           <button rel="tooltip" title="Delete" class="btn btn-info btn-simple btn-link"
                   @click="deleteUser(service, index)">
