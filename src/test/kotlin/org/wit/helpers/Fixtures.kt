@@ -14,7 +14,7 @@ val validaddress="Gk"
 val validgender="Male"
 val validtiming_slot = "Morning"
 val validtrainer="yes"
-val validservice_name="swiming"
+val validservice_name="swimming"
 //val validstarted = DateTime.now()
 
 
